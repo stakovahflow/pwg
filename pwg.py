@@ -48,7 +48,7 @@ import argparse
 from argparse import RawTextHelpFormatter
 
 typo = ''
-c = 16
+c = 32
 counter = 0
 line = '-' * 40
 
@@ -58,11 +58,10 @@ def PWG(z, t):
     charsset = ''
     # UPPERCASE -"O"
     U = 'ABCDEFGHIJKLMNPQRSTUVWXYZ'
-    # lowercase -"l"
     L = 'abcdefghijkmnopqrstuvwxyz'
     N = '0123456789'
-    S = '!@#$%^&*?<>'
-   
+    S = '%$^&*<>()[]'
+    F = '!@#?'
     # make sure we're using an integer, not a char/string
     z = int(z)
     for type in t:
@@ -70,12 +69,14 @@ def PWG(z, t):
             charsset = charsset + U
         if 'l' in t:
             charsset = charsset + L
+        if 'f' in t:
+            charsset = charsset + F
         if 'n' in t:
             charsset = charsset + N
         if 's' in t:
             charsset = charsset + S
         if 'a' == t:
-            charsset = charsset + U + L + N + S
+            charsset = charsset + U + L + N + S + F
    
     return ''.join(random.choice(charsset) for _ in range(0, int(z)))
 
@@ -87,6 +88,7 @@ parser = argparse.ArgumentParser(description='\n Create a random password\n\
  \t\tEnjoy! --0NetEnv@gmail.com', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("-c", "--count", dest="count", action="store", help="password length")
 parser.add_argument("-a", "--all", help="same as -l -n -s -u", action="store_true")
+parser.add_argument("-f", "--safe", help="include only 'safe' special characters", action="store_true")
 parser.add_argument("-l", "--lower", help="include lowercase characters", action="store_true")
 parser.add_argument("-n", "--number", help="include 0-9", action="store_true")
 parser.add_argument("-s", "--special", help="include special characters", action="store_true")
@@ -108,6 +110,10 @@ if args.lower:
     typo = typo + 'l'
     counter = counter + 1
     #print "lower"
+if args.safe:
+    typo = typo + 'f'
+    counter = counter + 1
+    #print "safe"
 if args.number:
     typo = typo + 'n'
     counter = counter + 1
@@ -139,15 +145,16 @@ if args.license:
 # Without further adieu, here's our if statement:
 if args.count:
     if counter == 0:
-        typo = 'a'
-        print ("defaulting to '--all'")
+        typo = 'fuln'
+        print ("defaulting to '-fuln'")
     print (line)
     print (PWG(results.count,typo))
 else:
     if counter == 0:
-        typo = 'a'
-        print ("defaulting to '--count 16 --all'")
+        typo = 'fuln'
+        print ("defaulting to '--count 32 -fuln'")
     print (line)
     print (PWG(c,typo))
 print (line)
 #print typo
+
