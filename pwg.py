@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 license = """
@@ -8,7 +8,7 @@ license = """
 #   
 #  The MIT License (MIT)
 #
-#  Copyright (c) 2017 StakOvahflow stakovahflow666@gmail.com
+#  Copyright (c) 2023 StakOvahflow stakovahflow666@gmail.com
 #  Permission is hereby granted, free of charge, to any
 #  person obtaining a copy of this software and associated
 #  documentation files (the "Software"), to deal in the
@@ -102,36 +102,36 @@ results = args = parser.parse_args()
 # Check that a length was given.
 # If not, gripe and exit.
 if args.count == '0':
-    print ("Input error:\nCannot create a zero length password.\nExiting")
+    print("Input error:\nCannot create a zero length password.\nExiting")
     exit (0)
 # check character results and add to counter if
 # selection is made.
 if args.lower:
     typo = typo + 'l'
     counter = counter + 1
-    #print "lower"
+    #print("lower")
 if args.safe:
     typo = typo + 'f'
     counter = counter + 1
-    #print "safe"
+    #print("safe")
 if args.number:
     typo = typo + 'n'
     counter = counter + 1
-    #print "number"
+    #print("number")
 if args.special:
     typo = typo + 's'
     counter = counter + 1
-    #print "special"
+    #print("special")
 if args.upper:
     typo = typo + 'u'
     counter = counter + 1
-    #print "upper"
+    #print("upper")
 if args.all:
     typo = 'a'
     counter = counter + 1
-    #print "all"
+    #print("all")
 if args.license:
-    print (license)
+    print(license)
     exit (1)
 
 # CHECK COUNTER
@@ -146,15 +146,15 @@ if args.license:
 if args.count:
     if counter == 0:
         typo = 'fuln'
-        print ("defaulting to '-fuln'")
-    print (line)
-    print (PWG(results.count,typo))
+        print("defaulting to '-fuln'")
+    print(line)
+    print(PWG(results.count,typo))
 else:
     if counter == 0:
         typo = 'fuln'
-        print ("defaulting to '--count 32 -fuln'")
-    print (line)
-    print (PWG(c,typo))
-print (line)
-#print typo
+        print("defaulting to '--count 32 -fuln'")
+    print(line)
+    print(PWG(c,typo))
+print(line)
+#print(typo)
 
