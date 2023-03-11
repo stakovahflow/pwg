@@ -1,3 +1,5 @@
+Thanks for downloading!
+
 Python Password Generator NOTES:
 ----------------------------------------
 
