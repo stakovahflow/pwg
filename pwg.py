@@ -101,8 +101,8 @@ results = args = parser.parse_args()
 # CHECK RESULTS
 # Check that a length was given.
 # If not, gripe and exit.
-if args.count == '0':
-    print("Input error:\nCannot create a zero length password.\nExiting")
+if args.count <= '0':
+    print("Input error:\nCannot create a zero (or negative) length password.\nExiting")
     exit (0)
 # check character results and add to counter if
 # selection is made.
