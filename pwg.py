@@ -85,7 +85,7 @@ parser = argparse.ArgumentParser(description='\n Create a random password\n\
  Special characters, numbers, UPPERCASE -"Oscar",\n\
  and lowercase -"lima" to avoid confusion.\n\
  Default options (no arguments): -c 16 -a\n\
- \t\tEnjoy! --0NetEnv@gmail.com', formatter_class=argparse.RawTextHelpFormatter)
+ \t\tEnjoy!\n-a', formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("-c", "--count", dest="count", action="store", help="password length")
 parser.add_argument("-a", "--all", help="same as -l -n -s -u", action="store_true")
 parser.add_argument("-f", "--safe", help="include only 'safe' special characters", action="store_true")
@@ -95,15 +95,21 @@ parser.add_argument("-s", "--special", help="include special characters", action
 parser.add_argument("-u", "--upper", help="include uppercase characters", action="store_true")
 parser.add_argument("-p", "--license", help="print license and exit", action="store_true")
 
+def check_user_input(input):
+    try:
+        # Convert it into integer
+        val = int(input)
+        return(val)
+    except:
+        print("Count (-c) input validation error. String value received.")
+        exit(0)
+
 # COLLECT ARGPARSE RESULTS
 results = args = parser.parse_args()
 
 # CHECK RESULTS
-# Check that a length was given.
-# If not, gripe and exit.
-if args.count <= '0':
-    print("Input error:\nCannot create a zero (or negative) length password.\nExiting")
-    exit (0)
+
+    
 # check character results and add to counter if
 # selection is made.
 if args.lower:
@@ -134,27 +140,16 @@ if args.license:
     print(license)
     exit (1)
 
-# CHECK COUNTER
-# Check our counter and see if we used any command line
-# options. We don't want to error out.
-# try it gracefully. If no arguments are given,
-# use defaults and tell the user.
-# args.count comes from argparse and by default requires
-# an input to '-c'. We want to get around that for the
-# sake of convenience.
-# Without further adieu, here's our if statement:
+# Without further adieu, here's our final logical statement:
+# Check that a valid password length was given.
+# If not, gripe and exit.
 if args.count:
+    check_user_input(args.count) >= 1
+    if int(args.count) <= 0:
+        print("Cannot create a zero (or negative) length password.")
+        exit(0)
     if counter == 0:
-        typo = 'fuln'
-        print("defaulting to '-fuln'")
-    print(line)
+        typo = 'fulns'
     print(PWG(results.count,typo))
 else:
-    if counter == 0:
-        typo = 'fuln'
-        print("defaulting to '--count 32 -fuln'")
-    print(line)
     print(PWG(c,typo))
-print(line)
-#print(typo)
-
