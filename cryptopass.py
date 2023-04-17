@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  passy.py
+#  cryptopass.py
 #  
-#  Copyright 2023 superuser <superuser@alchemy>
+#  Copyright (c) 2023 StakOvahflow stakovahflow666@gmail.com
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,23 +32,19 @@ import pyperclip
 import base64, os, argparse, csv, time
 from sys import argv
 from pathlib import Path
-passyFile=("%s/.passy.csv" % Path.home())
+passFile=("%s/.passy.csv" % Path.home())
 try:
 	searchSite=argv[1]
 	copyPass=False
 	lst = []
 	tmppass=''
 
-	# with open(passyFile, mode='r') as f:
-		# data = csv.DictReader(f)
-		# for row in data:
-			# lst.append(dict(row))
-	# #print(lst)	
 	def clear():
 		try:
 			pyperclip.copy('')
 		except:
 			print("error blanking clipboard")
+	
 	def clipper(searchSite,username,tmppass):
 		# write to the clipboard
 		try:
@@ -59,13 +55,12 @@ try:
 			print("for *NIX systems, please ensure you have xsel installed:")
 			print("	sudo apt install -y xsel")
 			print("	sudo dnf install -y xsel")
-
-
+	
 	def check_if_exists(x):
-		with open(passyFile, 'r') as f:
+		with open(passFile, 'r') as f:
 			reader = csv.reader(f)
 			for i, row in enumerate(reader):
-				if x == row[0]:
+				if x.lower() == row[0]:
 				#for j, column in enumerate(row):
 				#	if x in column:
 					print("Found: %s\n\tusername: %s" % (row[0], row[1]))
@@ -78,7 +73,7 @@ try:
 					break
 				# else:
 					# if copyPass == False:
-						# print("Can't find %s in %s" % (searchSite,passyFile))
+						# print("Can't find %s in %s" % (searchSite,passFile))
 	check_if_exists(searchSite)
 except:
 	print("""Usage: %s <site.tld>

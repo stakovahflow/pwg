@@ -149,7 +149,7 @@ if args.count:
         print("Cannot create a zero (or negative) length password.")
         exit(0)
     if counter == 0:
-        typo = 'fulns'
+        typo = 'fuln'
     print(PWG(results.count,typo))
 else:
     print(PWG(c,typo))
