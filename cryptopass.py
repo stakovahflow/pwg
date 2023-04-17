@@ -32,7 +32,7 @@ import pyperclip
 import base64, os, argparse, csv, time
 from sys import argv
 from pathlib import Path
-passFile=("%s/.passy.csv" % Path.home())
+passFile=("%s/.cryptopass.csv" % Path.home())
 try:
 	searchSite=argv[1]
 	copyPass=False
