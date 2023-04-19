@@ -33,6 +33,7 @@ import base64, os, argparse, csv, time
 from sys import argv
 from pathlib import Path
 passFile=("%s/.cryptopass.csv" % Path.home())
+clearTime=30
 try:
 	searchSite=argv[1]
 	copyPass=False
@@ -68,7 +69,7 @@ try:
 					tmppass=base64.b64decode(row[2])
 					clipper(searchSite,username,tmppass)
 					copyPass=True
-					time.sleep(10)
+					time.sleep(clearTime)
 					clear()	
 					break
 				# else:
