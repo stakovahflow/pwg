@@ -113,8 +113,9 @@ try:
 	parser.add_argument("-g", "--generate", action="store_true", help="Generate a new random password")
 	results = args = parser.parse_args()
 	if args.generate:
+		counter=counter + 1
 		generate=True
-		tmppass=(PWG(23,'a'))
+		tmppass=(PWG(16,'a'))
 		print(tmppass)
 		try:
 			pyperclip.copy(tmppass)
@@ -122,6 +123,7 @@ try:
 			print('unable to copy generated password to clipboard')
 		exit
 	elif args.site:
+		counter=counter + 1
 		searchSite=args.site
 		try:
 			check_if_exists(searchSite)
@@ -130,9 +132,13 @@ try:
 		except:
 			exit(0)
 		if args.add:
+			counter=counter + 1
 			add=True
 		if args.delete:
+			counter=counter + 1
 			delete=True
+	else:
+		print(args.help)
 except KeyboardInterrupt:
 	print("")
 	exit(0)
