@@ -34,12 +34,30 @@ from sys import argv
 from pathlib import Path
 passFile=("%s/.cryptopass.csv" % Path.home())
 clearTime=30
-try:
-	searchSite=argv[1]
-	copyPass=False
-	lst = []
-	tmppass=''
 
+try:
+	# GET ARGUMENTS using ARGPARSE
+	parser = argparse.ArgumentParser(description='\nCommand line password management tool written for shits and grins\n\
+	\t\tEnjoy!\n-a', formatter_class=argparse.RawTextHelpFormatter)
+	parser.add_argument("-s", "--site", dest="site", action="store", help="Specify site")
+	parser.add_argument("-a", "--add", action="store_true", help="Add a password to the vault for a specified site")
+	parser.add_argument("-d", "--delete", action="store_true", help="Delete a password from the vault for a specified site")
+	parser.add_argument("-g", "--generate", action="store_true", help="Generate a new random password")
+	parser.add_argument("-v", "--view", action="store_true", help="View a password for specified site")
+	results = args = parser.parse_args()
+	searchSite=''
+	copyPass=False
+	tmppass=''
+	if args.site:
+		site=args.site
+	if args.add:
+		add=True
+	if args.delete:
+		delete=True
+	if args.generate:
+		generate=True
+
+	
 	def clear():
 		try:
 			pyperclip.copy('')
@@ -75,7 +93,11 @@ try:
 				# else:
 					# if copyPass == False:
 						# print("Can't find %s in %s" % (searchSite,passFile))
-	check_if_exists(searchSite)
+	check_if_exists(site)
+except KeyboardInterrupt:
+	print("")
+	exit(0)
 except:
-	print("""Usage: %s <site.tld>
-Example: %s google.com""")
+	print("Usage: %s <site.tld>")
+	print("Example: %s google.com")
+	print("")
