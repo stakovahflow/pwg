@@ -28,12 +28,42 @@
 #	  A.2. Username
 ########################################################################
 
-import pyperclip
-import base64, os, argparse, csv, time
+import pyperclip, base64, os, argparse, csv, time
+import random
+#from pwg import PWG
 from sys import argv
 from pathlib import Path
 passFile=("%s/.cryptopass.csv" % Path.home())
 clearTime=30
+typo = ''
+counter = 0
+line = '-' * 40
+
+# CREATE FUNCTION for PWG
+def PWG(z, t):
+    # EMPTY SET OF CHARACTERS
+    charsset = ''
+    # UPPERCASE -"O"
+    U = 'ABCDEFGHIJKLMNPQRSTUVWXYZ'
+    # lowercase -"l"
+    L = 'abcdefghijkmnopqrstuvwxyz'
+    N = '0123456789'
+    S = '!@#$%^&*?<>'
+   
+    # make sure we're using an integer, not a char/string
+    z = int(z)
+    for type in t:
+        if 'u' in t:
+            charsset = charsset + U
+        if 'l' in t:
+            charsset = charsset + L
+        if 'n' in t:
+            charsset = charsset + N
+        if 's' in t:
+            charsset = charsset + S
+        if 'a' == t:
+            charsset = charsset + U + L + N + S
+    return ''.join(random.choice(charsset) for _ in range(0, int(z)))
 
 try:
 	# GET ARGUMENTS using ARGPARSE
@@ -42,22 +72,27 @@ try:
 	parser.add_argument("-s", "--site", dest="site", action="store", help="Specify site")
 	parser.add_argument("-a", "--add", action="store_true", help="Add a password to the vault for a specified site")
 	parser.add_argument("-d", "--delete", action="store_true", help="Delete a password from the vault for a specified site")
-	parser.add_argument("-g", "--generate", action="store_true", help="Generate a new random password")
 	parser.add_argument("-v", "--view", action="store_true", help="View a password for specified site")
+	parser.add_argument("-g", "--generate", action="store_true", help="Generate a new random password")
 	results = args = parser.parse_args()
 	searchSite=''
 	copyPass=False
 	tmppass=''
+	if args.generate:
+		generate=True
+		tmppass=(PWG(23,'a'))
+		print(tmppass)
+		try:
+			pyperclip.copy(tmppass)
+		except:
+			print('unable to copy generated password to clipboard')
+		exit(0)
 	if args.site:
 		site=args.site
 	if args.add:
 		add=True
 	if args.delete:
 		delete=True
-	if args.generate:
-		generate=True
-
-	
 	def clear():
 		try:
 			pyperclip.copy('')
