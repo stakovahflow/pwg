@@ -34,21 +34,15 @@ license = """
 #  DEALINGS IN THE SOFTWARE.
 # 
 #  NOTE:
-#  This software was tested on Slackware 14.2, Fedora 25 Raspbian, &
-#  Mac OS X 10.11
+#  This software was tested on Slackware 15, Ubuntu 22.04
+# (LTS), Debian 11.1, Fedora 28, & Raspbian
 #
 """
 
-import string
-import random
-import sys
-# first time using argparse library
-import argparse
-# wanted to change the formatting of the help menu a little bit, so used RawTextHelpFormatter directly
+import string, random, sys, argparse
 from argparse import RawTextHelpFormatter
 
 typo = ''
-c = 16
 counter = 0
 line = '-' * 40
 
@@ -85,7 +79,7 @@ parser = argparse.ArgumentParser(description='\n Create a random password\n\
  and lowercase -"lima" to avoid confusion.\n\
  Default options (no arguments): -c 16 -a\n\
  \t\tEnjoy! --stakovahflow666@gmail.com', formatter_class=argparse.RawTextHelpFormatter)
-parser.add_argument("-c", "--count", dest="count", action="store", help="password length")
+parser.add_argument("-c", "--count", type=int, dest="count", action="store", help="password length")
 parser.add_argument("-a", "--all", help="same as -l -n -s -u", action="store_true")
 parser.add_argument("-l", "--lower", help="include lowercase characters", action="store_true")
 parser.add_argument("-n", "--number", help="include 0-9", action="store_true")
@@ -99,34 +93,32 @@ results = args = parser.parse_args()
 # CHECK RESULTS
 # Check that a length was given.
 # If not, gripe and exit.
-if args.count == '0':
-    print ("Input error:\nCannot create a zero length password.\nExiting")
+try:
+    count=int(args.count)
+except:
+    count=16
+if count < 0:
+    print ("Input error:\nCannot create a negative length password.\nExiting")
     exit (0)
 # check character results and add to counter if
 # selection is made.
 if args.lower:
     typo = typo + 'l'
     counter = counter + 1
-    #print "lower"
 if args.number:
     typo = typo + 'n'
     counter = counter + 1
-    #print "number"
 if args.special:
     typo = typo + 's'
     counter = counter + 1
-    #print "special"
 if args.upper:
     typo = typo + 'u'
     counter = counter + 1
-    #print "upper"
 if args.all:
     typo = 'a'
-    counter = counter + 1
-    #print "all"
 if args.license:
     print (license)
-    exit (1)
+    exit (0)
 
 # CHECK COUNTER
 # Check our counter and see if we used any command line
@@ -137,13 +129,9 @@ if args.license:
 # an input to '-c'. We want to get around that for the
 # sake of convenience.
 # Without further adieu, here's our if statement:
-if args.count:
+try:
     if counter == 0:
         typo = 'a'
-        #print ("defaulting to '--all'")
-    print (PWG(results.count,typo))
-else:
-    if counter == 0:
-        typo = 'a'
-        #print ("defaulting to '--count 16 --all'")
-    print (PWG(c,typo))
+    print (PWG(count,typo))
+except:
+    print("error")
