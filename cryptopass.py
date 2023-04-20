@@ -28,7 +28,7 @@
 #	  A.2. Username
 ########################################################################
 
-import pyperclip, base64, os, argparse, csv, time
+import pyperclip, base64, sys, argparse, csv, time
 import random
 #from pwg import PWG
 from sys import argv
@@ -37,7 +37,7 @@ passFile=("%s/.cryptopass.csv" % Path.home())
 clearTime=30
 typo = ''
 counter = 0
-line = '-' * 40
+line = '-' * 60
 searchSite=''
 copyPass=False
 tmppass=''
@@ -104,11 +104,11 @@ def PWG(z, t):
 
 try:
 	# GET ARGUMENTS using ARGPARSE
-	parser = argparse.ArgumentParser(description='\nCommand line password management tool written for shits and grins\n\
-	\t\tEnjoy!\n-a', formatter_class=argparse.RawTextHelpFormatter)
+	parser = argparse.ArgumentParser(description=line+'\nCommand line password management tool\n written for shits and grins\n\
+	\t\tEnjoy!\n'+line,formatter_class=argparse.RawTextHelpFormatter)
 	parser.add_argument("-s", "--site", dest="site", action="store", help="Specify site")
-	parser.add_argument("-a", "--add", action="store_true", help="Add a password to the vault for a specified site")
-	parser.add_argument("-d", "--delete", action="store_true", help="Delete a password from the vault for a specified site")
+	parser.add_argument("-a", "--add", action="store_true", help="Add a password to the vault")
+	parser.add_argument("-d", "--delete", action="store_true", help="Delete a password from the vault")
 	parser.add_argument("-v", "--view", action="store_true", help="View a password for specified site")
 	parser.add_argument("-g", "--generate", action="store_true", help="Generate a new random password")
 	results = args = parser.parse_args()
@@ -138,11 +138,14 @@ try:
 			counter=counter + 1
 			delete=True
 	else:
-		print(args.help)
+		print("No input provided")
+		parser.print_help(sys.stderr)
 except KeyboardInterrupt:
 	print("")
 	exit(0)
 except:
-	print("Usage: %s <site.tld>" % argv[0])
-	print("Example: %s google.com" % argv[0])
-	print("")
+	print("\n%s\nExamples:" % line)
+	print("\n - Add new password: \n%s -a " % argv[0])
+	print("\n - Retrieve current password: \n%s -s google.com" % argv[0])
+	print("\n - Generate pseudorandom password: \n%s -g" % argv[0])
+
