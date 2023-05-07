@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
+# Initial version written in Python 2, updated to Python 3
+# Cheers!
 license = """
 #  pwg -- the pseudo-random password generator by stak ovahflow
 #
