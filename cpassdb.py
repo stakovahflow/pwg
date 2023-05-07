@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
+# Modified: 2023-05-05
 #  cpassdb.py
 license = """
 #  cpassdb -- the pseudo-random password generator & sqlite3 password manager by stak ovahflow
