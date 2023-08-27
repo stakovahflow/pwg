@@ -53,30 +53,29 @@ def line():
 
 # CREATE FUNCTION for PWG
 def PWG(z, t):
-    # EMPTY SET OF CHARACTERS
-    charsset = ''
-    # UPPERCASE -"O"
-    U = 'ABCDEFGHIJKLMNPQRSTUVWXYZ'
-    # lowercase -"l"
-    L = 'abcdefghijkmnopqrstuvwxyz'
-    N = '0123456789'
-    S = '!@#$%^&*?<>'
+	# EMPTY SET OF CHARACTERS
+	charsset = ''
+	# UPPERCASE -"O"
+	U = 'ABCDEFGHIJKLMNPQRSTUVWXYZ'
+	# lowercase -"l"
+	L = 'abcdefghijkmnopqrstuvwxyz'
+	N = '0123456789'
+	S = '!@#$%^&*?<>'
+	# make sure we're using an integer, not a char/string
+	z = int(z)
+	for type in t:
+		if 'u' in t:
+			charsset = charsset + U
+		if 'l' in t:
+			charsset = charsset + L
+		if 'n' in t:
+			charsset = charsset + N
+		if 's' in t:
+			charsset = charsset + S
+		if 'a' == t:
+			charsset = charsset + U + L + N + S
    
-    # make sure we're using an integer, not a char/string
-    z = int(z)
-    for type in t:
-        if 'u' in t:
-            charsset = charsset + U
-        if 'l' in t:
-            charsset = charsset + L
-        if 'n' in t:
-            charsset = charsset + N
-        if 's' in t:
-            charsset = charsset + S
-        if 'a' == t:
-            charsset = charsset + U + L + N + S
-   
-    return ''.join(random.choice(charsset) for _ in range(0, int(z)))
+	return ''.join(random.choice(charsset) for _ in range(0, int(z)))
 
 # GET ARGUMENTS using ARGPARSE
 parser = argparse.ArgumentParser(description='\n Create a random password\n\
@@ -100,31 +99,31 @@ results = args = parser.parse_args()
 # Check that a length was given.
 # If not, gripe and exit.
 try:
-    count=int(args.count)
+	count=int(args.count)
 except:
-    count=16
+	count=16
 if count < 0:
-    print ("Input error:\nCannot create a negative length password.\nExiting")
-    exit (0)
+	print ("Input error:\nCannot create a negative length password.\nExiting")
+	exit (0)
 # check character results and add to counter if
 # selection is made.
 if args.lower:
-    typo = typo + 'l'
-    counter = counter + 1
+	typo = typo + 'l'
+	counter = counter + 1
 if args.number:
-    typo = typo + 'n'
-    counter = counter + 1
+	typo = typo + 'n'
+	counter = counter + 1
 if args.special:
-    typo = typo + 's'
-    counter = counter + 1
+	typo = typo + 's'
+	counter = counter + 1
 if args.upper:
-    typo = typo + 'u'
-    counter = counter + 1
+	typo = typo + 'u'
+	counter = counter + 1
 if args.all:
-    typo = 'a'
+	typo = 'a'
 if args.license:
-    print (license)
-    exit (0)
+	print (license)
+	exit (0)
 if args.verbose:
 	verbosity=True
 else:
@@ -141,10 +140,10 @@ else:
 if verbosity:
 	line()
 try:
-    if counter == 0:
-        typo = 'a'
-    print (PWG(count,typo))
+	if counter == 0:
+		typo = 'a'
+	print (PWG(count,typo))
 except:
-    print("error")
+	print("error")
 if verbosity:
 	line()
