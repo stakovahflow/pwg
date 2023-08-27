@@ -35,17 +35,21 @@ license = """
 #  DEALINGS IN THE SOFTWARE.
 # 
 #  NOTE:
-#  This software was tested on Slackware 15, Ubuntu 22.04
-# (LTS), Debian 11.1, Fedora 28, & Raspbian
+#  This software was tested on Slackware (current), Ubuntu 22.04
+# (LTS), Debian 12.1, Raspbian
 #
 """
 
-import string, random, sys, argparse
+import string, random, sys, argparse, os
 from argparse import RawTextHelpFormatter
 
 typo = ''
 counter = 0
-line = '-' * 40
+#line = '-' * 40
+
+size = os.get_terminal_size().columns
+def line():
+	print('-'*size)
 
 # CREATE FUNCTION for PWG
 def PWG(z, t):
@@ -87,6 +91,7 @@ parser.add_argument("-n", "--number", help="include 0-9", action="store_true")
 parser.add_argument("-s", "--special", help="include special characters", action="store_true")
 parser.add_argument("-u", "--upper", help="include uppercase characters", action="store_true")
 parser.add_argument("-p", "--license", help="print license and exit", action="store_true")
+parser.add_argument("-v", "--verbose", help="basically, this adds a line", action="store_true")
 
 # COLLECT ARGPARSE RESULTS
 results = args = parser.parse_args()
@@ -120,7 +125,10 @@ if args.all:
 if args.license:
     print (license)
     exit (0)
-
+if args.verbose:
+	verbosity=True
+else:
+	verbosity=False
 # CHECK COUNTER
 # Check our counter and see if we used any command line
 # options. We don't want to error out.
@@ -130,9 +138,13 @@ if args.license:
 # an input to '-c'. We want to get around that for the
 # sake of convenience.
 # Without further adieu, here's our if statement:
+if verbosity:
+	line()
 try:
     if counter == 0:
         typo = 'a'
     print (PWG(count,typo))
 except:
     print("error")
+if verbosity:
+	line()
